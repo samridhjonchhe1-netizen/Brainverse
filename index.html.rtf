@@ -1,0 +1,857 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf610
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;\f2\fnil\fcharset0 LucidaGrande;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+<!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8">\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
+<title>BRAINVERSE - Puzzle Arcade</title>\
+\
+<style>\
+* \{ box-sizing: border-box; \}\
+\
+body \{\
+  margin: 0;\
+  font-family: Arial, sans-serif;\
+  background: #101020;\
+  color: white;\
+\}\
+\
+header \{\
+  background: #19172e;\
+  padding: 20px 7%;\
+  display: flex;\
+  justify-content: space-between;\
+  align-items: center;\
+  border-bottom: 1px solid #302b50;\
+\}\
+\
+.logo \{\
+  color: #a991ff;\
+  font-size: 25px;\
+  font-weight: bold;\
+  letter-spacing: 2px;\
+\}\
+\
+.profile \{ color: #d7ccff; \}\
+\
+.container \{\
+  max-width: 1050px;\
+  margin: auto;\
+  padding: 30px 20px;\
+\}\
+\
+.hero \{\
+  background: linear-gradient(120deg,#4932a8,#873fd0);\
+  border-radius: 20px;\
+  padding: 35px;\
+  margin-bottom: 25px;\
+\}\
+\
+.hero h1 \{ font-size: 36px; margin: 0 0 10px; \}\
+.hero p \{ color: #eee5ff; \}\
+\
+.stats \{\
+  display: grid;\
+  grid-template-columns: repeat(3,1fr);\
+  gap: 14px;\
+  margin-bottom: 30px;\
+\}\
+\
+.stat \{\
+  background: #1c1b32;\
+  border: 1px solid #35304f;\
+  border-radius: 13px;\
+  padding: 18px;\
+\}\
+\
+.stat strong \{\
+  display: block;\
+  color: #b59aff;\
+  font-size: 26px;\
+  margin-top: 8px;\
+\}\
+\
+.games \{\
+  display: grid;\
+  grid-template-columns: repeat(2,1fr);\
+  gap: 18px;\
+\}\
+\
+.game \{\
+  background: #1c1b32;\
+  border: 1px solid #36314f;\
+  border-radius: 16px;\
+  padding: 22px;\
+  transition: .2s;\
+\}\
+\
+.game:hover \{\
+  transform: translateY(-4px);\
+  border-color: #9876ff;\
+\}\
+\
+.game-icon \{ font-size: 40px; \}\
+.game p \{ color: #b9b6ca; line-height: 1.5; \}\
+\
+button \{\
+  background: #906cff;\
+  color: white;\
+  border: 0;\
+  border-radius: 9px;\
+  padding: 11px 17px;\
+  cursor: pointer;\
+  font-weight: bold;\
+  margin: 5px 3px;\
+\}\
+\
+button:hover \{ background: #a68bff; \}\
+button:disabled \{ opacity: .5; cursor: default; \}\
+\
+.secondary \{ background: #393450; \}\
+\
+#gameArea \{\
+  display: none;\
+  background: #1c1b32;\
+  border: 1px solid #49416a;\
+  border-radius: 18px;\
+  padding: 22px;\
+  margin-top: 30px;\
+  text-align: center;\
+\}\
+\
+#gameArea h2 \{ color: #cbbcff; \}\
+\
+select, input \{\
+  background: #111126;\
+  color: white;\
+  border: 1px solid #8067bd;\
+  border-radius: 8px;\
+  padding: 11px;\
+  font-size: 16px;\
+\}\
+\
+.game-message \{\
+  color: #cbbcff;\
+  min-height: 26px;\
+  line-height: 1.5;\
+\}\
+\
+.board \{\
+  display: grid;\
+  gap: 6px;\
+  max-width: 330px;\
+  margin: 20px auto;\
+\}\
+\
+.cell \{\
+  aspect-ratio: 1;\
+  min-width: 0;\
+  border: 1px solid #65568d;\
+  border-radius: 8px;\
+  background: #393450;\
+  color: white;\
+  font-size: 20px;\
+  font-weight: bold;\
+  padding: 3px;\
+  margin: 0;\
+\}\
+\
+.cell:disabled \{ opacity: 1; \}\
+\
+.achievements \{\
+  display: flex;\
+  flex-wrap: wrap;\
+  gap: 12px;\
+  margin: 20px 0;\
+\}\
+\
+.achievement \{\
+  background: #262344;\
+  padding: 12px;\
+  border-radius: 10px;\
+  color: #d7ccff;\
+\}\
+\
+.locked \{ opacity: .35; \}\
+\
+#gameArea label \{ color: #d7ccff; \}\
+\
+footer \{\
+  text-align: center;\
+  padding: 30px;\
+  color: #77738e;\
+\}\
+\
+@media(max-width:600px) \{\
+  header \{ padding: 16px; \}\
+  .logo \{ font-size: 19px; \}\
+  .hero h1 \{ font-size: 27px; \}\
+  .stats \{ grid-template-columns: 1fr; \}\
+  .games \{ grid-template-columns: 1fr; \}\
+  .container \{ padding: 20px 14px; \}\
+\}\
+</style>\
+</head>\
+\
+<body>\
+\
+<header>\
+  <div class="logo">
+\f1 \uc0\u55358 \u56800 
+\f0  BRAINVERSE</div>\
+  <div class="profile">PLAYER 1 
+\f1 \uc0\u55357 \u56420 
+\f0 </div>\
+</header>\
+\
+<main class="container">\
+\
+  <section class="hero">\
+    <h1>Think. Solve. Level Up.</h1>\
+    <p>Welcome to your ultimate puzzle playground.</p>\
+    <p>Four games. Endless brain challenges. How far can you go?</p>\
+  </section>\
+\
+  <section class="stats">\
+    <div class="stat">\
+      PLAYER LEVEL\
+      <strong id="level">1</strong>\
+    </div>\
+    <div class="stat">\
+      TOTAL XP\
+      <strong id="xp">0</strong>\
+    </div>\
+    <div class="stat">\
+      GAMES WON\
+      <strong id="wins">0</strong>\
+    </div>\
+  </section>\
+\
+  <h2>
+\f1 \uc0\u55356 \u57262 
+\f0  Choose Your Puzzle</h2>\
+\
+  <div class="games">\
+\
+    <div class="game">\
+      <div class="game-icon">
+\f1 \uc0\u55357 \u56610 
+\f0 </div>\
+      <h3>Number Merge 2048</h3>\
+      <p>Combine matching number tiles and reach the target number.</p>\
+      <button onclick="openGame('2048')">PLAY GAME</button>\
+    </div>\
+\
+    <div class="game">\
+      <div class="game-icon">\uc0\u55358 \u56809 </div>\
+      <h3>Sudoku Challenge</h3>\
+      <p>Fill the grid without repeating numbers in rows, columns or boxes.</p>\
+      <button onclick="openGame('sudoku')">PLAY GAME</button>\
+    </div>\
+\
+    <div class="game">\
+      <div class="game-icon">
+\f1 \uc0\u55357 \u56590 
+\f0 </div>\
+      <h3>Word Hunter</h3>\
+      <p>Find hidden words inside a grid of letters.</p>\
+      <button onclick="openGame('word')">PLAY GAME</button>\
+    </div>\
+\
+    <div class="game">\
+      <div class="game-icon">
+\f1 \uc0\u55357 \u56481 
+\f0 </div>\
+      <h3>Lights Out</h3>\
+      <p>Use clever moves to switch off every light.</p>\
+      <button onclick="openGame('lights')">PLAY GAME</button>\
+    </div>\
+\
+  </div>\
+\
+  <section id="gameArea">\
+    <div id="gameContent"></div>\
+    <button class="secondary" onclick="closeGame()">
+\f2 \uc0\u8592 
+\f0  BACK TO GAMES</button>\
+  </section>\
+\
+  <h2>
+\f1 \uc0\u55356 \u57286 
+\f0  Achievements</h2>\
+  <div class="achievements">\
+    <div class="achievement" id="firstBadge">
+\f1 \uc0\u55357 \u56594 
+\f0  First Victory</div>\
+    <div class="achievement locked" id="fiveBadge">
+\f1 \uc0\u55357 \u56594 
+\f0  Puzzle Explorer</div>\
+    <div class="achievement locked" id="tenBadge">
+\f1 \uc0\u55357 \u56594 
+\f0  Brain Master</div>\
+  </div>\
+\
+</main>\
+\
+<footer>BRAINVERSE \'a9 2026 | THINK. SOLVE. LEVEL UP.</footer>\
+\
+<script>\
+\
+// ==================================\
+// PLAYER PROGRESS\
+// ==================================\
+\
+let xp = Number(localStorage.getItem("bvXP")) || 0;\
+let wins = Number(localStorage.getItem("bvWins")) || 0;\
+let currentGame = "";\
+let state = \{\};\
+let awarded = false;\
+\
+function updateStats() \{\
+  document.getElementById("xp").textContent = xp;\
+  document.getElementById("wins").textContent = wins;\
+  document.getElementById("level").textContent =\
+    Math.floor(xp / 100) + 1;\
+\
+  document.getElementById("firstBadge").textContent =\
+    wins >= 1 ? "
+\f1 \uc0\u55356 \u57286 
+\f0  First Victory" : "
+\f1 \uc0\u55357 \u56594 
+\f0  First Victory";\
+\
+  document.getElementById("fiveBadge").textContent =\
+    wins >= 5 ? "
+\f1 \uc0\u55356 \u57286 
+\f0  Puzzle Explorer" : "
+\f1 \uc0\u55357 \u56594 
+\f0  Puzzle Explorer";\
+\
+  document.getElementById("tenBadge").textContent =\
+    wins >= 10 ? "
+\f1 \uc0\u55356 \u57286 
+\f0  Brain Master" : "
+\f1 \uc0\u55357 \u56594 
+\f0  Brain Master";\
+\
+  document.getElementById("fiveBadge").classList.toggle("locked", wins < 5);\
+  document.getElementById("tenBadge").classList.toggle("locked", wins < 10);\
+\
+  localStorage.setItem("bvXP", xp);\
+  localStorage.setItem("bvWins", wins);\
+\}\
+\
+function awardXP(amount) \{\
+  if (awarded) return;\
+  awarded = true;\
+  xp += amount;\
+  wins++;\
+  updateStats();\
+\}\
+\
+function message(text) \{\
+  let el = document.getElementById("gameMessage");\
+  if (el) el.textContent = text;\
+\}\
+\
+function openGame(name) \{\
+  currentGame = name;\
+  awarded = false;\
+\
+  document.getElementById("gameArea").style.display = "block";\
+  document.getElementById("gameArea").scrollIntoView(\{\
+    behavior: "smooth"\
+  \});\
+\
+  if (name === "2048") start2048();\
+  if (name === "sudoku") startSudoku();\
+  if (name === "word") startWord();\
+  if (name === "lights") startLights();\
+\}\
+\
+function closeGame() \{\
+  document.getElementById("gameArea").style.display = "none";\
+  currentGame = "";\
+\}\
+\
+function setGame(title, instructions, extra = "") \{\
+  document.getElementById("gameContent").innerHTML = `\
+    <h2>$\{title\}</h2>\
+    <p>$\{instructions\}</p>\
+    <label>Difficulty: </label>\
+    <select id="difficulty" onchange="restartGame()">\
+      <option value="easy">Easy</option>\
+      <option value="medium">Medium</option>\
+      <option value="hard">Hard</option>\
+    </select>\
+    $\{extra\}\
+    <p id="gameMessage" class="game-message"></p>\
+  `;\
+\}\
+\
+function restartGame() \{\
+  awarded = false;\
+  if (currentGame === "2048") start2048();\
+  if (currentGame === "sudoku") startSudoku();\
+  if (currentGame === "word") startWord();\
+  if (currentGame === "lights") startLights();\
+\}\
+\
+function shuffle(array) \{\
+  for (let i = array.length - 1; i > 0; i--) \{\
+    let j = Math.floor(Math.random() * (i + 1));\
+    [array[i], array[j]] = [array[j], array[i]];\
+  \}\
+  return array;\
+\}\
+\
+// ==================================\
+// GAME 1: NUMBER MERGE 2048\
+// ==================================\
+\
+function start2048() \{\
+  setGame("
+\f1 \uc0\u55357 \u56610 
+\f0  NUMBER MERGE 2048",\
+    "Use the arrow keys or buttons to move tiles. Matching numbers merge!",\
+    `<h3>Score: <span id="mergeScore">0</span></h3>\
+     <div id="mergeBoard" class="board"\
+       style="grid-template-columns:repeat(4,1fr)"></div>\
+     <button onclick="move2048('up')">
+\f2 \uc0\u8593 
+\f0 </button><br>\
+     <button onclick="move2048('left')">
+\f2 \uc0\u8592 
+\f0 </button>\
+     <button onclick="move2048('down')">
+\f2 \uc0\u8595 
+\f0 </button>\
+     <button onclick="move2048('right')">
+\f2 \uc0\u8594 
+\f0 </button>\
+     <br><button class="secondary" onclick="restartGame()">RESTART</button>`);\
+\
+  state.board = Array(16).fill(0);\
+  state.score = 0;\
+  state.won = false;\
+  state.gameOver = false;\
+\
+  addTile();\
+  addTile();\
+  render2048();\
+\}\
+\
+function addTile() \{\
+  let empty = state.board\
+    .map((v,i) => v === 0 ? i : -1)\
+    .filter(i => i !== -1);\
+\
+  if (!empty.length) return;\
+\
+  let index = empty[Math.floor(Math.random() * empty.length)];\
+  state.board[index] = Math.random() < .9 ? 2 : 4;\
+\}\
+\
+function render2048() \{\
+  let board = document.getElementById("mergeBoard");\
+  if (!board) return;\
+\
+  board.innerHTML = "";\
+\
+  state.board.forEach(value => \{\
+    let cell = document.createElement("div");\
+    cell.className = "cell";\
+    cell.style.display = "grid";\
+    cell.style.placeItems = "center";\
+    cell.style.background = value ? "#6650a8" : "#292542";\
+    cell.textContent = value || "";\
+    board.appendChild(cell);\
+  \});\
+\
+  document.getElementById("mergeScore").textContent = state.score;\
+\}\
+\
+function move2048(direction) \{\
+  if (state.gameOver || currentGame !== "2048") return;\
+\
+  let old = [...state.board];\
+\
+  for (let line = 0; line < 4; line++) \{\
+    let indexes = [];\
+\
+    for (let i = 0; i < 4; i++) \{\
+      let index =\
+        direction === "left" ? line * 4 + i :\
+        direction === "right" ? line * 4 + (3-i) :\
+        direction === "up" ? i * 4 + line :\
+        (3-i) * 4 + line;\
+\
+      indexes.push(index);\
+    \}\
+\
+    let values = indexes.map(i => state.board[i]).filter(v => v);\
+    let result = [];\
+\
+    for (let i = 0; i < values.length; i++) \{\
+      if (values[i] === values[i+1]) \{\
+        result.push(values[i] * 2);\
+        state.score += values[i] * 2;\
+        i++;\
+      \} else \{\
+        result.push(values[i]);\
+      \}\
+    \}\
+\
+    while (result.length < 4) result.push(0);\
+\
+    indexes.forEach((index,i) => \{\
+      state.board[index] = result[i];\
+    \});\
+  \}\
+\
+  if (old.join() !== state.board.join()) \{\
+    addTile();\
+    render2048();\
+  \}\
+\
+  let target = document.getElementById("difficulty").value === "easy" ? 128 :\
+    document.getElementById("difficulty").value === "medium" ? 512 : 2048;\
+\
+  if (!state.won && state.board.some(v => v >= target)) \{\
+    state.won = true;\
+    awardXP(target === 128 ? 15 : target === 512 ? 30 : 50);\
+    message("
+\f1 \uc0\u55356 \u57225 
+\f0  Target reached! You earned XP!");\
+  \}\
+\
+  if (!canMove2048()) \{\
+    state.gameOver = true;\
+    message("No more moves! Restart to play again.");\
+  \}\
+\}\
+\
+function canMove2048() \{\
+  let b = state.board;\
+\
+  for (let r = 0; r < 4; r++) \{\
+    for (let c = 0; c < 4; c++) \{\
+      let i = r * 4 + c;\
+      if (!b[i]) return true;\
+      if (c < 3 && b[i] === b[i+1]) return true;\
+      if (r < 3 && b[i] === b[i+4]) return true;\
+    \}\
+  \}\
+  return false;\
+\}\
+\
+// ==================================\
+// GAME 2: SUDOKU CHALLENGE\
+// ==================================\
+\
+function startSudoku() \{\
+  setGame("\uc0\u55358 \u56809  SUDOKU CHALLENGE",\
+    "Fill each row, column and 2\'d72 box with numbers 1, 2, 3 and 4.",\
+    `<div id="sudokuBoard" class="board"\
+      style="grid-template-columns:repeat(4,1fr);max-width:260px"></div>\
+     <button onclick="checkSudoku()">CHECK ANSWERS</button>\
+     <button class="secondary" onclick="restartGame()">RESTART</button>`);\
+\
+  let solution = [\
+    [1,2,3,4],\
+    [3,4,1,2],\
+    [2,1,4,3],\
+    [4,3,2,1]\
+  ];\
+\
+  let difficulty = document.getElementById("difficulty").value;\
+  let blanks = difficulty === "easy" ? 4 :\
+               difficulty === "medium" ? 7 : 10;\
+\
+  state.solution = solution;\
+  state.board = solution.map(row => [...row]);\
+  state.given = Array.from(\{length:4\}, () => Array(4).fill(false));\
+\
+  let positions = shuffle(\
+    Array.from(\{length:16\}, (_,i) => i)\
+  );\
+\
+  for (let i = 0; i < blanks; i++) \{\
+    let p = positions[i];\
+    state.board[Math.floor(p/4)][p%4] = 0;\
+  \}\
+\
+  renderSudoku();\
+\}\
+\
+function renderSudoku() \{\
+  let board = document.getElementById("sudokuBoard");\
+  if (!board) return;\
+\
+  board.innerHTML = "";\
+\
+  state.board.forEach((row,r) => \{\
+    row.forEach((value,c) => \{\
+      let input = document.createElement("input");\
+      input.className = "cell";\
+      input.type = "number";\
+      input.min = 1;\
+      input.max = 4;\
+      input.value = value || "";\
+      input.disabled = value !== 0;\
+      input.style.background = value ? "#393450" : "#25213f";\
+\
+      input.oninput = () => \{\
+        let n = Number(input.value);\
+        state.board[r][c] = n >= 1 && n <= 4 ? n : 0;\
+      \};\
+\
+      board.appendChild(input);\
+    \});\
+  \});\
+\}\
+\
+function checkSudoku() \{\
+  let correct = state.board.every((row,r) =>\
+    row.every((value,c) => value === state.solution[r][c])\
+  );\
+\
+  if (correct) \{\
+    awardXP(30);\
+    message("
+\f1 \uc0\u55356 \u57286 
+\f0  Excellent! Sudoku solved! +30 XP");\
+  \} else \{\
+    message("Not quite! Check your rows, columns and boxes.");\
+  \}\
+\}\
+\
+// ==================================\
+// GAME 3: WORD HUNTER\
+// ==================================\
+\
+function startWord() \{\
+  setGame("
+\f1 \uc0\u55357 \u56590 
+\f0  WORD HUNTER",\
+    "Find the hidden words. All words are placed horizontally in the grid.",\
+    `<div id="wordGrid" style="font-size:24px;line-height:1.9;\
+      letter-spacing:5px;margin:15px"></div>\
+     <p id="wordTargets"></p>\
+     <input id="wordInput" maxlength="4"\
+       placeholder="Type a word" style="width:150px">\
+     <button onclick="checkWord()">FIND WORD</button>\
+     <p id="wordCount"></p>\
+     <button class="secondary" onclick="restartGame()">RESTART</button>`);\
+\
+  state.grid = [\
+    "CATQZ",\
+    "SUNBP",\
+    "MAPRO",\
+    "DOGTE",\
+    "FISHX"\
+  ];\
+\
+  let difficulty = document.getElementById("difficulty").value;\
+\
+  state.words = difficulty === "easy"\
+    ? ["CAT","SUN","MAP"]\
+    : difficulty === "medium"\
+    ? ["CAT","SUN","MAP","DOG"]\
+    : ["CAT","SUN","MAP","DOG","FISH"];\
+\
+  state.found = [];\
+\
+  document.getElementById("wordGrid").innerHTML =\
+    state.grid.map(row => `<div>$\{row.split("").join(" ")\}</div>`).join("");\
+\
+  document.getElementById("wordTargets").textContent =\
+    "Find: " + state.words.join(" \'95 ");\
+\
+  document.getElementById("wordCount").textContent =\
+    "Found: 0 / " + state.words.length;\
+\}\
+\
+function checkWord() \{\
+  let input = document.getElementById("wordInput")\
+    .value.trim().toUpperCase();\
+\
+  if (!state.words.includes(input)) \{\
+    message("That word isn't on today's list. Try again!");\
+    return;\
+  \}\
+\
+  if (state.found.includes(input)) \{\
+    message("You already found that word!");\
+    return;\
+  \}\
+\
+  state.found.push(input);\
+  document.getElementById("wordInput").value = "";\
+\
+  document.getElementById("wordCount").textContent =\
+    "Found: " + state.found.length + " / " + state.words.length;\
+\
+  if (state.found.length === state.words.length) \{\
+    let reward = state.words.length === 3 ? 15 :\
+                 state.words.length === 4 ? 25 : 35;\
+\
+    awardXP(reward);\
+    message("
+\f1 \uc0\u55356 \u57225 
+\f0  All words found! +" + reward + " XP");\
+  \} else \{\
+    message("Correct! Keep searching.");\
+  \}\
+\}\
+\
+// ==================================\
+// GAME 4: LIGHTS OUT\
+// ==================================\
+\
+function startLights() \{\
+  setGame("
+\f1 \uc0\u55357 \u56481 
+\f0  LIGHTS OUT",\
+    "Tap a light to switch it and its neighbours on or off. Turn every light off!",\
+    `<div id="lightsBoard" class="board"\
+      style="grid-template-columns:repeat(5,1fr);max-width:290px"></div>\
+     <button class="secondary" onclick="restartGame()">RESTART</button>`);\
+\
+  let difficulty = document.getElementById("difficulty").value;\
+  let size = difficulty === "easy" ? 3 :\
+             difficulty === "medium" ? 4 : 5;\
+\
+  state.size = size;\
+  state.lights = Array(size * size).fill(false);\
+\
+  // Scramble with valid moves so the puzzle can be solved.\
+  let moves = difficulty === "easy" ? 5 :\
+              difficulty === "medium" ? 10 : 16;\
+\
+  for (let i = 0; i < moves; i++) \{\
+    toggleLight(Math.floor(Math.random() * size * size), false);\
+  \}\
+\
+  renderLights();\
+\}\
+\
+function toggleLight(index, render = true) \{\
+  let size = state.size;\
+  let r = Math.floor(index / size);\
+  let c = index % size;\
+\
+  let positions = [\
+    [r,c],\
+    [r-1,c],\
+    [r+1,c],\
+    [r,c-1],\
+    [r,c+1]\
+  ];\
+\
+  positions.forEach(([a,b]) => \{\
+    if (a >= 0 && a < size && b >= 0 && b < size) \{\
+      let i = a * size + b;\
+      state.lights[i] = !state.lights[i];\
+    \}\
+  \});\
+\
+  if (render) renderLights();\
+\}\
+\
+function renderLights() \{\
+  let board = document.getElementById("lightsBoard");\
+  if (!board) return;\
+\
+  board.style.gridTemplateColumns =\
+    `repeat($\{state.size\},1fr)`;\
+\
+  board.innerHTML = "";\
+\
+  state.lights.forEach((on,i) => \{\
+    let button = document.createElement("button");\
+    button.className = "cell";\
+    button.textContent = on ? "
+\f1 \uc0\u55357 \u56481 
+\f0 " : "
+\f1 \uc0\u9899 
+\f0 ";\
+    button.style.background = on ? "#8062c9" : "#25223c";\
+\
+    button.onclick = () => \{\
+      if (awarded) return;\
+\
+      toggleLight(i);\
+\
+      if (state.lights.every(v => !v)) \{\
+        let reward = state.size === 3 ? 15 :\
+                     state.size === 4 ? 25 : 35;\
+        awardXP(reward);\
+        message("
+\f1 \uc0\u55356 \u57225 
+\f0  All lights are off! +" + reward + " XP");\
+      \}\
+    \};\
+\
+    board.appendChild(button);\
+  \});\
+\}\
+\
+// ==================================\
+// KEYBOARD CONTROLS\
+// ==================================\
+\
+document.addEventListener("keydown", function(event) \{\
+  if (currentGame !== "2048") return;\
+\
+  if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(event.key)) \{\
+    event.preventDefault();\
+\
+    let directions = \{\
+      ArrowUp: "up",\
+      ArrowDown: "down",\
+      ArrowLeft: "left",\
+      ArrowRight: "right"\
+    \};\
+\
+    move2048(directions[event.key]);\
+  \}\
+\});\
+function setGame(title, instructions, extra = "") \{\
+  let previousDifficulty =\
+    document.getElementById("difficulty")?.value || "easy";\
+\
+  document.getElementById("gameContent").innerHTML = `\
+    <h2>$\{title\}</h2>\
+    <p>$\{instructions\}</p>\
+    <label>Difficulty: </label>\
+    <select id="difficulty" onchange="restartGame()">\
+      <option value="easy">Easy</option>\
+      <option value="medium">Medium</option>\
+      <option value="hard">Hard</option>\
+    </select>\
+    $\{extra\}\
+    <p id="gameMessage" class="game-message"></p>\
+  `;\
+\
+  document.getElementById("difficulty").value =\
+    previousDifficulty;\
+\}\
+\
+\
+// START\
+updateStats();\
+\
+</script>\
+\
+</body>\
+</html>\
+}
